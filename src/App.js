@@ -53,13 +53,10 @@ class Dashboard extends Component {
     };
 
     handleItemChangeState = (itemId) => {
-        console.log('pulling handleItemChangeState from Dashboard');
         this.changeEditState(itemId);
     };
 
     changeEditState = (itemId) => {
-        console.log('changeEditState from Dashboard');
-
         this.state.items.map((item) => {
             if (item.id === itemId) {
                 if (item.isDone) {
@@ -77,17 +74,14 @@ class Dashboard extends Component {
     };
 
     handleItemRemove = (itemId) => {
-        console.log('pulling handleItemRemove from Dashboard, itemId='+itemId);
         rootRef.child(itemId).remove();
     };
 
     handleNewItemSubmit = (item) => {
-        console.log('pulling handleNewItemSubmit from Dashboard')
         rootRef.push().set(item);
     };
 
     handleItemChangeLabelSubmit = (itemToChange, newLabelValue) => {
-        console.log('pulling handleItemChangeLabelSubmit from Dashboard')
         rootRef.child(itemToChange.id).update({
             label: newLabelValue,
         })
@@ -160,7 +154,6 @@ class EditableItem extends Component {
     };
 
     handleItemChangeLabel = () => {
-        console.log('pulled handleItemChangeLabel from EditableItem');
         this.changeEditState();
     };
 
@@ -177,12 +170,10 @@ class EditableItem extends Component {
     };
 
     handleItemChangeLabelCancel = () => {
-        console.log('pulled handleItemChangeLabelCancel from EditableItem');
         this.changeEditState();
     };
 
     handleItemChangeLabelSubmit = (itemToChange, newLabelValue) => {
-        console.log('pulled handleItemChangeLabelSubmit from EditableItem');
         this.props.handleItemChangeLabelSubmit(itemToChange, newLabelValue);
         this.changeEditState();
     };
@@ -222,17 +213,14 @@ class EditableItem extends Component {
 class Item extends Component {
 
     handleItemRemove = () => {
-        console.log('pulling handleItemRemove from Item')
         this.props.onRemove(this.props.id)
     };
 
     handleItemChangeLabel = () => {
-        console.log('pulling handleItemChangeLabel from Item')
         this.props.onChangeLabel(this.props.id)
     };
 
     handleItemChangeState = () => {
-        console.log('pulling handleItemChangeState from Item');
         this.props.onChangeState(this.props.id)
     };
 
@@ -345,16 +333,13 @@ class ItemForm extends Component {
         this.setState({
             label: e.target.value,
         });
-        console.log('pulling handleInputLabelChange from ItemForm')
     };
 
     handleItemChangeLabelSubmit = () => {
-        console.log('pulling handleItemChangeLabelSubmit from ItemForm');
         this.props.onSubmitLabel(this.props, this.state.label);
     };
 
     handleItemChangeLabelCancel = () => {
-        console.log('pulling handleItemChangeLabelCancel from ItemForm');
         this.props.onCancelLabel(this.props.id);
     };
 
@@ -368,8 +353,6 @@ class ItemForm extends Component {
                         multiLine={true}
                         onChange={this.handleInputLabelChange}
                         onKeyPress={ (e) => {
-                            console.log(e);
-                            console.log(e.keyCode);
                             if (e.key === 'Enter') {
                                 this.props.onSubmitLabel(this.props, this.state.label);
                             }
@@ -419,13 +402,11 @@ class ItemAddForm extends Component {
             });
             this.setState({ label: '' });
         }
-        console.log('pulling handleNewItemSubmit from ItemAddForm');
     };
 
     handleItemSubmitByEnter = (e) => {
         if (e.charCode===13) {
             if (this.state.label!=="") {
-                console.log('pulling handleItemSubmit from ItemAddForm');
                 this.props.handleItemSubmit({
                     id: +new Date(),
                     label: this.state.label,
